@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const Counter: React.FC = () => {
+  const [num, setNum] = React.useState<number>(0);
+  const [numList, setNumList] = React.useState<number[]>([]);
+
+  const clickHandler = (step: number) => {
+    const newNum = num + step > 0 ? num + step : 0;
+    setNum(newNum);
+    setNumList((prevList) => [...prevList, newNum]);
+  };
+  const maxValue = Math.max(...numList);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <p>
+        Counter - {num} | Max - {maxValue}
+      </p>
+      <p>{numList.join(' ')}</p>
+      <button className="btn" type="button" onClick={clickHandler.bind(null, 1)}>
+        +1
+      </button>
+      <button className="btn" type="button" onClick={clickHandler.bind(null, -1)}>
+        -1
+      </button>
+      <button className="btn" type="button" onClick={clickHandler.bind(null, 5)}>
+        +5
+      </button>
+      <button className="btn" type="button" onClick={clickHandler.bind(null, -5)}>
+        -5
+      </button>
+    </>
   );
+};
+
+function App() {
+  return <Counter />;
 }
 
 export default App;
